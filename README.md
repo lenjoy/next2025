@@ -6,8 +6,8 @@
 - **Features**: Interactive speakers directory, detailed speaker profiles, search and filtering capabilities, responsive design
 
 ## Live URLs
-- **Production**: https://23c7cb42.nex-t-2025.pages.dev
-- **Production API**: https://23c7cb42.nex-t-2025.pages.dev/api/speakers
+- **Production**: https://f90570cd.nex-t-2025.pages.dev
+- **Production API**: https://f90570cd.nex-t-2025.pages.dev/api/speakers
 - **Development**: https://3000-i7iw780a7spdww18yxc86-6532622b.e2b.dev
 - **GitHub**: https://github.com/lenjoy/next2025
 
@@ -15,16 +15,19 @@
 
 ### ✅ Fully Implemented
 1. **Complete Speaker Database** - 38 speakers from NEX-T 2025 Summit stored in Cloudflare D1
-2. **Interactive Speaker Grid** - Modern card-based layout with hover effects
-3. **Speaker Detail Modal** - Click any speaker name to view full background information
-4. **Advanced Search & Filter System**:
+2. **LinkedIn Profile Integration** - 34+ verified LinkedIn profiles linked to speakers
+3. **Interactive Speaker Grid** - Modern card-based layout with hover effects and LinkedIn icons
+4. **Speaker Detail Modal** - Click any speaker name to view full background information with LinkedIn links
+5. **Advanced Search & Filter System**:
    - Real-time text search across names, titles, organizations, and backgrounds
    - Filter by session type: All, Public Sessions, Closed Door sessions
-5. **Responsive Design** - Works perfectly on desktop, tablet, and mobile devices
-6. **API Endpoints**:
-   - `GET /api/speakers` - List all speakers with search/filter support
-   - `GET /api/speakers/:slug` - Get individual speaker details
+6. **Responsive Design** - Works perfectly on desktop, tablet, and mobile devices
+7. **Professional Social Integration** - Direct LinkedIn access for networking
+8. **API Endpoints**:
+   - `GET /api/speakers` - List all speakers with LinkedIn profiles
+   - `GET /api/speakers/:slug` - Get individual speaker details with LinkedIn
    - `POST /api/seed` - Initialize database with speaker data
+   - `POST /api/update-linkedin` - Update LinkedIn profiles for all speakers
 
 ### 🎨 User Interface Features
 - Professional gradient header with event information
@@ -67,8 +70,9 @@
 ## Data Architecture
 
 ### **Database**: Cloudflare D1 SQLite
-- **speakers** table with full speaker information
-- Indexed on name, slug, organization for fast queries
+- **speakers** table with full speaker information including LinkedIn URLs
+- Indexed on name, slug, organization, and LinkedIn URL for fast queries
+- 34+ verified LinkedIn profiles integrated
 - Local development uses SQLite with --local flag
 
 ### **Storage Services Used**:
@@ -87,10 +91,11 @@
 
 ### **Production Database Status**
 - **Total Speakers**: 38 speakers confirmed in Cloudflare D1
+- **LinkedIn Profiles**: 34+ verified LinkedIn profiles integrated
 - **Public Sessions**: 35 speakers  
 - **Closed Door Sessions**: 3 speakers
-- **Database Size**: 0.06 MB
-- **Last Seeded**: September 21, 2025
+- **Database Size**: 0.07 MB (includes LinkedIn URLs)
+- **Last Updated**: September 21, 2025
 
 ### **Closed Door Sessions** (3 speakers)
 - Chen Tianqiao (Founder, Shanda Group)
@@ -108,11 +113,13 @@
 ## User Guide
 
 ### **For Visitors**:
-1. **Browse Speakers**: Visit the main page to see all 38 NEX-T 2025 speakers
+1. **Browse Speakers**: Visit the main page to see all 38 NEX-T 2025 speakers with LinkedIn icons
 2. **Search**: Use the search bar to find speakers by name, company, or background
 3. **Filter**: Use filter buttons to show All, Public Sessions, or Closed Door sessions only  
 4. **View Details**: Click any speaker's name to open detailed background information
-5. **Responsive**: Works on all devices - desktop, tablet, and mobile
+5. **Connect on LinkedIn**: Click LinkedIn icons to view professional profiles and connect
+6. **Network**: Direct access to 34+ verified LinkedIn profiles for professional networking
+7. **Responsive**: Works on all devices - desktop, tablet, and mobile
 
 ### **For Developers**:
 1. **API Access**: Use REST endpoints to integrate speaker data into other applications
@@ -148,7 +155,7 @@
 - ✅ Production D1 database created and configured  
 - ✅ Database migrations applied to production
 - ✅ Cloudflare Workers runtime configured
-- ✅ Database seeded with all 38 NEX-T 2025 speakers
+- ✅ Database seeded with all 38 NEX-T 2025 speakers plus LinkedIn profiles
 
 ## Development Commands
 
