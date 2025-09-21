@@ -633,98 +633,350 @@ app.get('/', (c) => {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>NEX-T 2025 Summit - Speakers</title>
+        <title>NEX-T 2025 Summit - Future Tech Assembly</title>
         <script src="https://cdn.tailwindcss.com"></script>
         <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet">
+        <script>
+          tailwind.config = {
+            theme: {
+              extend: {
+                fontFamily: {
+                  'futuristic': ['Orbitron', 'monospace'],
+                  'cyber': ['Exo 2', 'sans-serif']
+                },
+                colors: {
+                  'neon-blue': '#00D4FF',
+                  'neon-purple': '#8B5CF6',
+                  'neon-green': '#00FF94',
+                  'neon-pink': '#FF0080',
+                  'dark-space': '#0A0A23',
+                  'space-gray': '#1A1B3A',
+                  'cyber-dark': '#121234'
+                }
+              }
+            }
+          }
+        </script>
         <style>
+          /* Animated Background */
+          body {
+            background: linear-gradient(135deg, #0A0A23 0%, #1A1B3A 50%, #121234 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+          }
+          
+          .stars-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: 
+              radial-gradient(2px 2px at 20px 30px, #fff, transparent),
+              radial-gradient(2px 2px at 40px 70px, #fff, transparent),
+              radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+              radial-gradient(1px 1px at 130px 80px, #fff, transparent),
+              radial-gradient(2px 2px at 160px 30px, #fff, transparent);
+            background-repeat: repeat;
+            background-size: 200px 100px;
+            animation: sparkle 20s linear infinite;
+            opacity: 0.6;
+          }
+          
+          @keyframes sparkle {
+            from { transform: translateX(0); }
+            to { transform: translateX(200px); }
+          }
+          
+          .cyber-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background-image: 
+              linear-gradient(rgba(0, 212, 255, 0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(0, 212, 255, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            animation: gridMove 30s linear infinite;
+          }
+          
+          @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+          }
+          
+          /* Futuristic Cards */
           .speaker-card {
-            transition: all 0.3s ease;
+            background: linear-gradient(145deg, rgba(26, 27, 58, 0.9), rgba(18, 18, 52, 0.9));
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
           }
+          
+          .speaker-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.2), transparent);
+            transition: left 0.7s;
+          }
+          
+          .speaker-card:hover::before {
+            left: 100%;
+          }
+          
           .speaker-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 
+              0 25px 50px -12px rgba(0, 212, 255, 0.3),
+              0 0 30px rgba(139, 92, 246, 0.2),
+              inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border-color: #00D4FF;
           }
-          .loading {
+          
+          /* Glowing Elements */
+          .glow-text {
+            text-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor;
+          }
+          
+          .neon-border {
+            border: 2px solid transparent;
+            background: linear-gradient(145deg, rgba(26, 27, 58, 0.9), rgba(18, 18, 52, 0.9)) padding-box,
+                       linear-gradient(45deg, #00D4FF, #8B5CF6, #00FF94) border-box;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+          }
+          
+          /* Holographic Header */
+          .holographic-header {
+            background: linear-gradient(135deg, 
+              rgba(0, 212, 255, 0.1) 0%,
+              rgba(139, 92, 246, 0.1) 25%,
+              rgba(0, 255, 148, 0.1) 50%,
+              rgba(255, 0, 128, 0.1) 75%,
+              rgba(0, 212, 255, 0.1) 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+            position: relative;
+          }
+          
+          @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+          }
+          
+          /* Loading Animation */
+          .quantum-loader {
+            width: 40px;
+            height: 40px;
+            position: relative;
             display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #3498db;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
           }
-          @keyframes spin {
+          
+          .quantum-loader::before,
+          .quantum-loader::after {
+            content: '';
+            width: 40px;
+            height: 40px;
+            border: 3px solid transparent;
+            border-top-color: #00D4FF;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            animation: quantumSpin 1.5s linear infinite;
+          }
+          
+          .quantum-loader::after {
+            border-top-color: #8B5CF6;
+            animation-duration: 2s;
+            animation-direction: reverse;
+          }
+          
+          @keyframes quantumSpin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
           }
+          
+          /* Buttons */
+          .cyber-btn {
+            background: linear-gradient(45deg, #00D4FF, #8B5CF6);
+            border: none;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+          }
+          
+          .cyber-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+          }
+          
+          .cyber-btn:hover::before {
+            left: 100%;
+          }
+          
+          .cyber-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+          }
+          
+          /* Modal */
+          .cyber-modal {
+            background: linear-gradient(145deg, rgba(10, 10, 35, 0.95), rgba(18, 18, 52, 0.95));
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+          }
+          
+          /* Search Bar */
+          .cyber-search {
+            background: linear-gradient(145deg, rgba(26, 27, 58, 0.8), rgba(18, 18, 52, 0.8));
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            backdrop-filter: blur(10px);
+          }
+          
+          .cyber-search:focus {
+            border-color: #00D4FF;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+          }
+          
+          /* LinkedIn Icons */
+          .linkedin-glow {
+            transition: all 0.3s ease;
+          }
+          
+          .linkedin-glow:hover {
+            color: #0077B5;
+            text-shadow: 0 0 10px #0077B5;
+            transform: scale(1.2);
+          }
+          
+          /* Status Badges */
+          .closed-door-badge {
+            background: linear-gradient(45deg, #FF0080, #FF4500);
+            animation: pulse 2s infinite;
+          }
+          
+          @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+          }
+          
+          /* Scrollbar */
+          ::-webkit-scrollbar {
+            width: 8px;
+          }
+          
+          ::-webkit-scrollbar-track {
+            background: rgba(26, 27, 58, 0.5);
+          }
+          
+          ::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, #00D4FF, #8B5CF6);
+            border-radius: 4px;
+          }
+          
+          ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(45deg, #8B5CF6, #00D4FF);
+          }
         </style>
     </head>
-    <body class="bg-gray-50 min-h-screen">
+    <body class="font-cyber text-white min-h-screen relative">
+        <!-- Animated Background -->
+        <div class="stars-bg"></div>
+        <div class="cyber-grid"></div>
+        
         <!-- Header -->
-        <header class="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-8 px-4">
-            <div class="max-w-6xl mx-auto text-center">
-                <h1 class="text-4xl font-bold mb-4">
-                    <i class="fas fa-microphone-alt mr-3"></i>
-                    NEX-T 2025 Summit
+        <header class="holographic-header relative z-10 py-12 px-4">
+            <div class="max-w-6xl mx-auto text-center relative">
+                <div class="mb-6">
+                    <i class="fas fa-satellite-dish text-6xl text-neon-blue glow-text mb-4 block"></i>
+                </div>
+                <h1 class="font-futuristic text-5xl md:text-7xl font-black mb-6 glow-text text-transparent bg-clip-text bg-gradient-to-r from-neon-blue via-neon-purple to-neon-green">
+                    NEX-T 2025
                 </h1>
-                <p class="text-xl opacity-90">The New Era of X-Tech Summit</p>
-                <p class="text-lg opacity-75 mt-2">September 27-28, 2025 • Stanford Faculty Club</p>
+                <div class="space-y-2">
+                    <p class="text-2xl font-cyber font-semibold text-neon-blue">▼ FUTURE TECH ASSEMBLY ▼</p>
+                    <p class="text-lg text-gray-300 font-light tracking-wider">◆ September 27-28, 2025 ◆ Stanford Faculty Club ◆</p>
+                    <div class="mt-4 flex justify-center space-x-4">
+                        <div class="w-2 h-2 bg-neon-green rounded-full animate-pulse"></div>
+                        <div class="w-2 h-2 bg-neon-blue rounded-full animate-pulse" style="animation-delay: 0.5s"></div>
+                        <div class="w-2 h-2 bg-neon-purple rounded-full animate-pulse" style="animation-delay: 1s"></div>
+                    </div>
+                </div>
             </div>
         </header>
 
         <!-- Navigation -->
-        <nav class="bg-white shadow-sm border-b border-gray-200">
-            <div class="max-w-6xl mx-auto px-4 py-4">
+        <nav class="neon-border relative z-10 mx-4 rounded-lg">
+            <div class="max-w-6xl mx-auto px-6 py-4">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center space-x-8">
-                        <a href="/" class="text-gray-900 font-semibold border-b-2 border-blue-600 pb-2">
-                            <i class="fas fa-users mr-2"></i>Speakers
+                        <a href="/" class="text-neon-blue font-cyber font-bold border-b-2 border-neon-blue pb-2 glow-text">
+                            <i class="fas fa-users mr-2"></i>SPEAKERS_MATRIX
                         </a>
-                        <div class="text-gray-500">
-                            <i class="fas fa-calendar-alt mr-2"></i>Schedule (Coming Soon)
+                        <div class="text-gray-400 font-cyber">
+                            <i class="fas fa-calendar-alt mr-2"></i>SCHEDULE.exe [LOADING...]
                         </div>
                     </div>
-                    <div class="text-sm text-gray-600">
-                        <span id="speaker-count" class="font-semibold">Loading...</span> speakers
+                    <div class="text-sm text-neon-green font-cyber">
+                        <span class="text-neon-purple">&gt;</span> <span id="speaker-count" class="font-bold glow-text">LOADING...</span> <span class="text-neon-blue">ENTITIES_DETECTED</span>
                     </div>
                 </div>
             </div>
         </nav>
 
         <!-- Main Content -->
-        <main class="max-w-6xl mx-auto px-4 py-8">
+        <main class="max-w-6xl mx-auto px-4 py-8 relative z-10">
             <!-- Search and Filter -->
-            <div class="mb-8 bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <div class="mb-8 neon-border rounded-lg p-6">
                 <div class="flex flex-col md:flex-row gap-4">
                     <div class="flex-1">
                         <div class="relative">
                             <input
                                 type="text"
                                 id="search"
-                                placeholder="Search speakers by name, organization, or background..."
-                                class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                                placeholder="▶ SCAN_DATABASE: Name, Organization, Neural_Pattern..."
+                                class="cyber-search w-full pl-12 pr-4 py-4 text-white placeholder-gray-400 rounded-lg outline-none font-cyber"
                             />
-                            <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-neon-blue glow-text"></i>
                         </div>
                     </div>
-                    <div class="flex gap-2">
+                    <div class="flex gap-3">
                         <button
                             id="filter-all"
-                            class="px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                            class="cyber-btn px-6 py-3 text-white rounded-lg font-cyber font-bold transition-all"
                         >
-                            All
+                            <i class="fas fa-globe mr-2"></i>ALL_MATRIX
                         </button>
                         <button
                             id="filter-public"
-                            class="px-4 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors font-medium"
+                            class="px-6 py-3 bg-space-gray text-gray-300 rounded-lg hover:bg-neon-blue hover:text-white transition-all font-cyber border border-gray-600"
                         >
-                            Public Sessions
+                            <i class="fas fa-unlock mr-2"></i>PUBLIC_ACCESS
                         </button>
                         <button
                             id="filter-closed"
-                            class="px-4 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors font-medium"
+                            class="px-6 py-3 bg-space-gray text-gray-300 rounded-lg hover:bg-neon-pink hover:text-white transition-all font-cyber border border-gray-600"
                         >
-                            Closed Door
+                            <i class="fas fa-lock mr-2"></i>CLASSIFIED
                         </button>
                     </div>
                 </div>
@@ -732,46 +984,52 @@ app.get('/', (c) => {
 
             <!-- Loading State -->
             <div id="loading" class="text-center py-12">
-                <div class="loading mx-auto mb-4"></div>
-                <p class="text-gray-600">Loading speakers...</p>
+                <div class="quantum-loader mx-auto mb-6"></div>
+                <p class="text-neon-blue font-cyber text-lg glow-text">◆ INITIALIZING_QUANTUM_DATABASE ◆</p>
+                <p class="text-gray-400 font-cyber text-sm mt-2">Scanning neural networks...</p>
             </div>
 
             <!-- Speakers Grid -->
-            <div id="speakers-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 hidden">
+            <div id="speakers-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 hidden">
                 <!-- Speakers will be loaded here -->
             </div>
 
             <!-- No Results -->
             <div id="no-results" class="text-center py-12 hidden">
-                <i class="fas fa-search text-4xl text-gray-300 mb-4"></i>
-                <p class="text-gray-600 text-lg">No speakers found matching your criteria.</p>
+                <i class="fas fa-satellite text-5xl text-neon-purple mb-6 glow-text"></i>
+                <p class="text-neon-blue font-cyber text-xl mb-2">◆ SEARCH_PROTOCOL_FAILED ◆</p>
+                <p class="text-gray-400">No entities match the specified parameters</p>
             </div>
 
             <!-- Error State -->
             <div id="error" class="text-center py-12 hidden">
-                <i class="fas fa-exclamation-triangle text-4xl text-red-300 mb-4"></i>
-                <p class="text-red-600 text-lg mb-4">Failed to load speakers.</p>
-                <button onclick="loadSpeakers()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                    Try Again
+                <i class="fas fa-exclamation-triangle text-5xl text-neon-pink mb-6 glow-text"></i>
+                <p class="text-neon-pink font-cyber text-xl mb-4">◆ SYSTEM_ERROR_DETECTED ◆</p>
+                <p class="text-gray-400 mb-6">Neural network connection failed</p>
+                <button onclick="loadSpeakers()" class="cyber-btn px-6 py-3 text-white rounded-lg font-cyber font-bold">
+                    <i class="fas fa-redo mr-2"></i>RETRY_CONNECTION
                 </button>
             </div>
         </main>
 
         <!-- Speaker Detail Modal -->
-        <div id="speaker-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+        <div id="speaker-modal" class="fixed inset-0 bg-black bg-opacity-75 backdrop-filter backdrop-blur-sm hidden z-50">
             <div class="flex items-center justify-center min-h-screen px-4">
-                <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-screen overflow-y-auto">
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-6">
-                            <h2 id="modal-speaker-name" class="text-2xl font-bold text-gray-900"></h2>
-                            <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 transition-colors">
-                                <i class="fas fa-times text-xl"></i>
+                <div class="cyber-modal rounded-xl shadow-2xl max-w-3xl w-full max-h-screen overflow-y-auto relative">
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-8">
+                            <h2 id="modal-speaker-name" class="text-3xl font-futuristic font-black text-neon-blue glow-text"></h2>
+                            <button onclick="closeModal()" class="text-neon-purple hover:text-neon-pink transition-all transform hover:scale-110 hover:rotate-90">
+                                <i class="fas fa-times text-2xl glow-text"></i>
                             </button>
                         </div>
-                        <div id="modal-content">
+                        <div id="modal-content" class="font-cyber">
                             <!-- Modal content will be loaded here -->
                         </div>
                     </div>
+                    <!-- Decorative Elements -->
+                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-neon-blue via-neon-purple to-neon-green"></div>
+                    <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-neon-green via-neon-pink to-neon-blue"></div>
                 </div>
             </div>
         </div>
@@ -827,60 +1085,72 @@ app.get('/', (c) => {
                 grid.innerHTML = filteredSpeakers.map(speaker => {
                     const isClosedDoor = speaker.is_closed_door;
                     return \`
-                        <div class="speaker-card bg-white rounded-lg border border-gray-200 p-6 cursor-pointer hover:border-blue-300 transition-all"
+                        <div class="speaker-card rounded-xl p-6 cursor-pointer relative overflow-hidden group"
                              onclick="showSpeakerDetail('\${speaker.slug}')">
-                            <div class="flex items-start justify-between mb-3">
-                                <h3 class="text-lg font-semibold text-gray-900 hover:text-blue-600 transition-colors">
-                                    \${speaker.name}
+                            <div class="flex items-start justify-between mb-4">
+                                <h3 class="text-xl font-futuristic font-bold text-neon-blue glow-text group-hover:text-neon-green transition-all">
+                                    <i class="fas fa-user-astronaut mr-2 text-neon-purple"></i>\${speaker.name}
                                 </h3>
-                                \${isClosedDoor ? '<span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full">Closed Door</span>' : ''}
+                                \${isClosedDoor ? '<span class="closed-door-badge text-white text-xs px-3 py-1 rounded-full font-cyber font-bold"><i class="fas fa-shield-alt mr-1"></i>CLASSIFIED</span>' : '<span class="bg-gradient-to-r from-neon-green to-neon-blue text-black text-xs px-3 py-1 rounded-full font-cyber font-bold"><i class="fas fa-broadcast-tower mr-1"></i>PUBLIC</span>'}
                             </div>
                             
                             \${speaker.title ? \`
-                                <p class="text-sm text-gray-600 mb-2 font-medium">
-                                    <i class="fas fa-briefcase mr-1"></i>
-                                    \${speaker.title}
-                                </p>
+                                <div class="mb-3 p-3 rounded-lg bg-gradient-to-r from-space-gray to-cyber-dark border border-neon-blue border-opacity-20">
+                                    <p class="text-sm text-neon-blue font-cyber font-semibold">
+                                        <i class="fas fa-code mr-2"></i>ROLE_MATRIX
+                                    </p>
+                                    <p class="text-gray-300 font-cyber text-sm mt-1">\${speaker.title}</p>
+                                </div>
                             \` : ''}
                             
                             \${speaker.organization ? \`
-                                <p class="text-sm text-blue-600 mb-3">
-                                    <i class="fas fa-building mr-1"></i>
-                                    \${speaker.organization}
-                                </p>
+                                <div class="mb-3 p-3 rounded-lg bg-gradient-to-r from-cyber-dark to-space-gray border border-neon-purple border-opacity-20">
+                                    <p class="text-sm text-neon-purple font-cyber font-semibold">
+                                        <i class="fas fa-network-wired mr-2"></i>ORGANIZATION_ID
+                                    </p>
+                                    <p class="text-gray-300 font-cyber text-sm mt-1">\${speaker.organization}</p>
+                                </div>
                             \` : ''}
                             
                             \${speaker.linkedin_summary ? \`
-                                <div class="mb-3">
-                                    <p class="text-xs text-gray-600 leading-relaxed line-clamp-4">
-                                        <i class="fab fa-linkedin text-blue-600 mr-1"></i>
-                                        \${speaker.linkedin_summary.substring(0, 200)}\${speaker.linkedin_summary.length > 200 ? '...' : ''}
+                                <div class="mb-4 p-3 rounded-lg bg-gradient-to-br from-dark-space to-space-gray border border-neon-green border-opacity-20">
+                                    <p class="text-sm text-neon-green font-cyber font-semibold mb-2">
+                                        <i class="fab fa-linkedin mr-2"></i>NEURAL_PROFILE
+                                    </p>
+                                    <p class="text-gray-400 font-cyber text-xs leading-relaxed">
+                                        \${speaker.linkedin_summary.substring(0, 180)}\${speaker.linkedin_summary.length > 180 ? '...' : ''}
                                     </p>
                                 </div>
                             \` : speaker.background ? \`
-                                <div class="mb-3">
-                                    <p class="text-xs text-gray-500 line-clamp-3">
+                                <div class="mb-4 p-3 rounded-lg bg-gradient-to-br from-dark-space to-space-gray border border-neon-pink border-opacity-20">
+                                    <p class="text-sm text-neon-pink font-cyber font-semibold mb-2">
+                                        <i class="fas fa-brain mr-2"></i>DATA_PROFILE
+                                    </p>
+                                    <p class="text-gray-400 font-cyber text-xs leading-relaxed">
                                         \${speaker.background.substring(0, 120)}\${speaker.background.length > 120 ? '...' : ''}
                                     </p>
                                 </div>
                             \` : ''}
                             
-                            <div class="mt-4 flex items-center justify-between">
-                                <div class="text-blue-600 text-sm font-medium">
-                                    <i class="fas fa-arrow-right mr-1"></i>
-                                    View Details
+                            <div class="mt-4 flex items-center justify-between pt-3 border-t border-neon-blue border-opacity-20">
+                                <div class="cyber-btn text-sm font-cyber font-bold px-4 py-2 rounded-lg">
+                                    <i class="fas fa-terminal mr-2"></i>ACCESS_DATA
                                 </div>
                                 \${speaker.linkedin_url ? \`
-                                    <div class="flex items-center space-x-2">
+                                    <div class="flex items-center space-x-3">
                                         <a href="\${speaker.linkedin_url}" target="_blank" rel="noopener noreferrer" 
                                            onclick="event.stopPropagation()" 
-                                           class="text-blue-600 hover:text-blue-800 transition-colors"
-                                           title="View LinkedIn Profile">
-                                            <i class="fab fa-linkedin text-lg"></i>
+                                           class="linkedin-glow text-neon-blue hover:text-blue-400 transition-all"
+                                           title="Neural Network Link">
+                                            <i class="fab fa-linkedin text-xl"></i>
                                         </a>
-                                        <span class="text-xs text-gray-400">LinkedIn</span>
+                                        <span class="text-xs text-gray-500 font-cyber">CONNECT</span>
                                     </div>
-                                \` : ''}
+                                \` : \`
+                                    <div class="text-xs text-gray-600 font-cyber">
+                                        <i class="fas fa-unlink mr-1"></i>OFFLINE
+                                    </div>
+                                \`}
                             </div>
                         </div>
                     \`;
@@ -895,80 +1165,92 @@ app.get('/', (c) => {
                     if (response.data.success) {
                         const speaker = response.data.data;
                         
-                        document.getElementById('modal-speaker-name').textContent = speaker.name;
+                        document.getElementById('modal-speaker-name').innerHTML = \`<i class="fas fa-user-astronaut mr-3 text-neon-purple"></i>\${speaker.name}\`;
                         
                         const modalContent = document.getElementById('modal-content');
                         modalContent.innerHTML = \`
                             \${speaker.is_closed_door ? \`
-                                <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+                                <div class="closed-door-badge rounded-lg p-4 mb-6 border border-neon-pink border-opacity-30">
                                     <div class="flex items-center">
-                                        <i class="fas fa-lock text-red-500 mr-2"></i>
-                                        <span class="text-red-800 font-medium">Closed Door Session</span>
+                                        <i class="fas fa-shield-alt text-white mr-3 glow-text"></i>
+                                        <span class="text-white font-cyber font-bold">◆ CLASSIFIED ACCESS LEVEL ◆</span>
                                     </div>
                                 </div>
-                            \` : ''}
+                            \` : \`
+                                <div class="bg-gradient-to-r from-neon-green to-neon-blue text-black rounded-lg p-4 mb-6 border border-neon-green border-opacity-30">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-broadcast-tower text-black mr-3"></i>
+                                        <span class="text-black font-cyber font-bold">◆ PUBLIC ACCESS GRANTED ◆</span>
+                                    </div>
+                                </div>
+                            \`}
                             
                             \${speaker.title ? \`
-                                <div class="mb-4">
-                                    <h4 class="text-sm font-semibold text-gray-700 mb-2">
-                                        <i class="fas fa-briefcase mr-2"></i>Position
+                                <div class="mb-6 p-4 rounded-lg bg-gradient-to-r from-space-gray to-cyber-dark border border-neon-blue border-opacity-30">
+                                    <h4 class="text-neon-blue font-cyber font-bold mb-3 glow-text">
+                                        <i class="fas fa-code mr-3"></i>ROLE_MATRIX_DETAILED
                                     </h4>
-                                    <p class="text-gray-900">\${speaker.title}</p>
+                                    <p class="text-gray-300 font-cyber leading-relaxed">\${speaker.title}</p>
                                 </div>
                             \` : ''}
                             
                             \${speaker.organization ? \`
-                                <div class="mb-4">
-                                    <h4 class="text-sm font-semibold text-gray-700 mb-2">
-                                        <i class="fas fa-building mr-2"></i>Organization
+                                <div class="mb-6 p-4 rounded-lg bg-gradient-to-r from-cyber-dark to-space-gray border border-neon-purple border-opacity-30">
+                                    <h4 class="text-neon-purple font-cyber font-bold mb-3 glow-text">
+                                        <i class="fas fa-network-wired mr-3"></i>ORGANIZATION_NETWORK
                                     </h4>
-                                    <p class="text-blue-600 font-medium">\${speaker.organization}</p>
+                                    <p class="text-gray-300 font-cyber leading-relaxed">\${speaker.organization}</p>
                                 </div>
                             \` : ''}
                             
                             \${speaker.background ? \`
-                                <div class="mb-4">
-                                    <h4 class="text-sm font-semibold text-gray-700 mb-2">
-                                        <i class="fas fa-user mr-2"></i>Background
+                                <div class="mb-6 p-4 rounded-lg bg-gradient-to-br from-dark-space to-space-gray border border-neon-pink border-opacity-30">
+                                    <h4 class="text-neon-pink font-cyber font-bold mb-3 glow-text">
+                                        <i class="fas fa-brain mr-3"></i>BACKGROUND_PROTOCOL
                                     </h4>
-                                    <p class="text-gray-900 leading-relaxed">\${speaker.background}</p>
+                                    <p class="text-gray-300 font-cyber leading-relaxed">\${speaker.background}</p>
                                 </div>
                             \` : ''}
                             
                             \${speaker.linkedin_summary ? \`
-                                <div class="mb-4">
-                                    <h4 class="text-sm font-semibold text-gray-700 mb-2">
-                                        <i class="fab fa-linkedin mr-2 text-blue-600"></i>Professional Summary
+                                <div class="mb-6 p-4 rounded-lg bg-gradient-to-br from-dark-space to-space-gray border border-neon-green border-opacity-30">
+                                    <h4 class="text-neon-green font-cyber font-bold mb-3 glow-text">
+                                        <i class="fab fa-linkedin mr-3"></i>NEURAL_PROFILE_EXPANDED
                                     </h4>
-                                    <p class="text-gray-900 leading-relaxed mb-3">\${speaker.linkedin_summary}</p>
+                                    <p class="text-gray-300 font-cyber leading-relaxed mb-4">\${speaker.linkedin_summary}</p>
                                     \${speaker.linkedin_url ? \`
                                         <a href="\${speaker.linkedin_url}" target="_blank" rel="noopener noreferrer" 
-                                           class="text-blue-600 hover:text-blue-800 transition-colors font-medium">
-                                            <i class="fab fa-linkedin mr-1"></i>
-                                            Connect on LinkedIn
-                                            <i class="fas fa-external-link-alt ml-1 text-xs"></i>
+                                           class="cyber-btn inline-flex items-center px-4 py-2 rounded-lg font-cyber font-bold transition-all">
+                                            <i class="fab fa-linkedin mr-2"></i>
+                                            ESTABLISH_NEURAL_LINK
+                                            <i class="fas fa-external-link-alt ml-2 text-xs"></i>
                                         </a>
                                     \` : ''}
                                 </div>
                             \` : speaker.linkedin_url ? \`
-                                <div class="mb-4">
-                                    <h4 class="text-sm font-semibold text-gray-700 mb-2">
-                                        <i class="fab fa-linkedin mr-2"></i>LinkedIn Profile
+                                <div class="mb-6 p-4 rounded-lg bg-gradient-to-br from-dark-space to-space-gray border border-neon-blue border-opacity-30">
+                                    <h4 class="text-neon-blue font-cyber font-bold mb-3 glow-text">
+                                        <i class="fab fa-linkedin mr-3"></i>NETWORK_CONNECTION
                                     </h4>
                                     <a href="\${speaker.linkedin_url}" target="_blank" rel="noopener noreferrer" 
-                                       class="text-blue-600 hover:text-blue-800 transition-colors font-medium">
-                                        <i class="fab fa-linkedin mr-1"></i>
-                                        View LinkedIn Profile
-                                        <i class="fas fa-external-link-alt ml-1 text-xs"></i>
+                                       class="cyber-btn inline-flex items-center px-4 py-2 rounded-lg font-cyber font-bold transition-all">
+                                        <i class="fab fa-linkedin mr-2"></i>
+                                        ACCESS_PROFILE_DATA
+                                        <i class="fas fa-external-link-alt ml-2 text-xs"></i>
                                     </a>
                                 </div>
                             \` : ''}
                             
-                            <div class="border-t border-gray-200 pt-4 mt-6">
-                                <p class="text-xs text-gray-500">
-                                    <i class="fas fa-calendar mr-1"></i>
-                                    NEX-T 2025 Summit • September 27-28, 2025
-                                </p>
+                            <div class="border-t border-neon-blue border-opacity-30 pt-6 mt-8">
+                                <div class="text-center">
+                                    <p class="text-neon-blue font-cyber text-sm glow-text">
+                                        <i class="fas fa-satellite-dish mr-2"></i>
+                                        ◆ NEX-T 2025 FUTURE TECH ASSEMBLY ◆
+                                    </p>
+                                    <p class="text-gray-400 font-cyber text-xs mt-2">
+                                        September 27-28, 2025 • Stanford Faculty Club • Earth Sector 7
+                                    </p>
+                                </div>
                             </div>
                         \`;
                         
@@ -993,12 +1275,13 @@ app.get('/', (c) => {
                 
                 // Update button styles
                 document.querySelectorAll('[id^="filter-"]').forEach(btn => {
-                    btn.classList.remove('bg-blue-600', 'text-white');
-                    btn.classList.add('bg-gray-200', 'text-gray-700');
+                    btn.classList.remove('cyber-btn');
+                    btn.classList.add('px-6', 'py-3', 'bg-space-gray', 'text-gray-300', 'rounded-lg', 'hover:bg-neon-blue', 'hover:text-white', 'transition-all', 'font-cyber', 'border', 'border-gray-600');
                 });
                 
-                document.getElementById(\`filter-\${type}\`).classList.remove('bg-gray-200', 'text-gray-700');
-                document.getElementById(\`filter-\${type}\`).classList.add('bg-blue-600', 'text-white');
+                const activeBtn = document.getElementById(\`filter-\${type}\`);
+                activeBtn.classList.remove('px-6', 'py-3', 'bg-space-gray', 'text-gray-300', 'rounded-lg', 'hover:bg-neon-blue', 'hover:text-white', 'transition-all', 'font-cyber', 'border', 'border-gray-600');
+                activeBtn.classList.add('cyber-btn');
                 
                 // Filter data
                 switch (type) {
