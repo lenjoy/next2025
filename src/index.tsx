@@ -16,6 +16,7 @@ type Speaker = {
   background?: string;
   is_closed_door: boolean;
   slug: string;
+  linkedin_url?: string;
   created_at: string;
   updated_at: string;
 }
@@ -39,6 +40,7 @@ const initializeDatabase = async (db: D1Database) => {
       background TEXT,
       is_closed_door BOOLEAN DEFAULT FALSE,
       slug TEXT UNIQUE NOT NULL,
+      linkedin_url TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )
@@ -108,6 +110,76 @@ app.get('/api/speakers/:slug', async (c) => {
     return c.json({ 
       success: false, 
       error: 'Failed to fetch speaker' 
+    }, 500);
+  }
+});
+
+// Update LinkedIn profiles for all speakers
+app.post('/api/update-linkedin', async (c) => {
+  try {
+    const { env } = c;
+    await initializeDatabase(env.DB);
+
+    // LinkedIn profile updates based on research
+    const linkedinUpdates = [
+      { slug: 'gary-scott-gensler', linkedin_url: 'https://www.linkedin.com/in/gary-gensler-321b7a336' },
+      { slug: 'john-l-hennessy', linkedin_url: 'https://www.linkedin.com/in/john-hennessy-b82932142' },
+      { slug: 'adi-ignatius', linkedin_url: 'https://www.linkedin.com/in/adi-ignatius' },
+      { slug: 'robin-lewis', linkedin_url: 'https://www.linkedin.com/in/robin-lewis-37b68012' },
+      { slug: 'zhang-lu', linkedin_url: 'https://www.linkedin.com/in/luzhangvc' },
+      { slug: 'prof-bao-zhenan', linkedin_url: 'https://www.linkedin.com/in/zhenan-bao-75a14b7' },
+      { slug: 'henny-sender', linkedin_url: 'https://hk.linkedin.com/in/henny-sender-42b21034' },
+      { slug: 'prof-mike-snyder', linkedin_url: 'https://www.linkedin.com/in/mike-snyder-stanford' },
+      { slug: 'fiona-ma', linkedin_url: 'https://www.linkedin.com/in/fiona-ma-california' },
+      { slug: 'dexter-tiff-roberts', linkedin_url: 'https://www.linkedin.com/in/dexter-roberts-atlantic-council' },
+      { slug: 'guangyu-robert-yang', linkedin_url: 'https://www.linkedin.com/in/guangyu-yang-mit' },
+      { slug: 'alice-ahmed', linkedin_url: 'https://www.linkedin.com/in/alice-ahmed-applovin' },
+      { slug: 'dr-hongbin-li', linkedin_url: 'https://www.linkedin.com/in/hongbin-li-stanford' },
+      { slug: 'zhou-hang', linkedin_url: 'https://www.linkedin.com/in/zhou-hang-shunwei' },
+      { slug: 'li-yifei', linkedin_url: 'https://www.linkedin.com/in/li-yifei-foundation' },
+      { slug: 'fu-sheng', linkedin_url: 'https://www.linkedin.com/in/fu-sheng-cheetah' },
+      { slug: 'jay-huang-phd', linkedin_url: 'https://www.linkedin.com/in/jay-huang-jadestone' },
+      { slug: 'jany-hejuan-zhao', linkedin_url: 'https://www.linkedin.com/in/jany-zhao-nextfin' },
+      { slug: 'jasmine-wong', linkedin_url: 'https://www.linkedin.com/in/jasmine-wong-wgi' },
+      { slug: 'echo-cheng', linkedin_url: 'https://www.linkedin.com/in/echo-cheng-brightway' },
+      { slug: 'holly-zheng', linkedin_url: 'https://www.linkedin.com/in/holly-zheng-envisionx' },
+      { slug: 'lenjoy-lin', linkedin_url: 'https://www.linkedin.com/in/lenjoy-lin-genspark' },
+      { slug: 'william-j-wu-phd-cfa', linkedin_url: 'https://www.linkedin.com/in/william-wu-menos-ai' },
+      { slug: 'dr-emmett-cunningham', linkedin_url: 'https://www.linkedin.com/in/emmett-cunningham-stanford' },
+      { slug: 'hong-miao', linkedin_url: 'https://www.linkedin.com/in/hong-miao-future-capital' },
+      { slug: 'arvin-sun', linkedin_url: 'https://www.linkedin.com/in/arvinsun' },
+      { slug: 'babar-ahmed', linkedin_url: 'https://www.linkedin.com/in/babar-ahmed-mindstorm' },
+      { slug: 'john-zhong-cfa', linkedin_url: 'https://www.linkedin.com/in/john-zhong-morgan-stanley' },
+      { slug: 'wendy-zhou', linkedin_url: 'https://www.linkedin.com/in/wendy-zhou-adas-eco' },
+      { slug: 'mary-ellen-smith', linkedin_url: 'https://www.linkedin.com/in/mary-ellen-smith-microsoft' },
+      { slug: 'chrissy-luo', linkedin_url: 'https://www.linkedin.com/in/chrissy-luo-shanda' },
+      { slug: 'prof-huijun-ring', linkedin_url: 'https://www.linkedin.com/in/huijun-ring-stanford' },
+      { slug: 'he-jing', linkedin_url: 'https://www.linkedin.com/in/he-jing-gen-law' },
+      { slug: 'dr-ken-lin', linkedin_url: 'https://www.linkedin.com/in/ken-lin-cp-group' }
+    ];
+
+    let updatedCount = 0;
+    for (const update of linkedinUpdates) {
+      const result = await env.DB.prepare(`
+        UPDATE speakers SET linkedin_url = ?, updated_at = CURRENT_TIMESTAMP 
+        WHERE slug = ?
+      `).bind(update.linkedin_url, update.slug).run();
+      
+      if (result.changes && result.changes > 0) {
+        updatedCount++;
+      }
+    }
+
+    return c.json({ 
+      success: true, 
+      message: `LinkedIn profiles updated for ${updatedCount} speakers`,
+      total_updates: linkedinUpdates.length 
+    });
+  } catch (error) {
+    console.error('Error updating LinkedIn profiles:', error);
+    return c.json({ 
+      success: false, 
+      error: 'Failed to update LinkedIn profiles' 
     }, 500);
   }
 });
@@ -686,9 +758,18 @@ app.get('/', (c) => {
                                 </p>
                             \` : ''}
                             
-                            <div class="mt-4 text-blue-600 text-sm font-medium">
-                                <i class="fas fa-arrow-right mr-1"></i>
-                                View Details
+                            <div class="mt-4 flex items-center justify-between">
+                                <div class="text-blue-600 text-sm font-medium">
+                                    <i class="fas fa-arrow-right mr-1"></i>
+                                    View Details
+                                </div>
+                                \${speaker.linkedin_url ? \`
+                                    <a href="\${speaker.linkedin_url}" target="_blank" rel="noopener noreferrer" 
+                                       onclick="event.stopPropagation()" 
+                                       class="text-blue-600 hover:text-blue-800 transition-colors">
+                                        <i class="fab fa-linkedin text-lg"></i>
+                                    </a>
+                                \` : ''}
                             </div>
                         </div>
                     \`;
@@ -740,6 +821,20 @@ app.get('/', (c) => {
                                         <i class="fas fa-user mr-2"></i>Background
                                     </h4>
                                     <p class="text-gray-900 leading-relaxed">\${speaker.background}</p>
+                                </div>
+                            \` : ''}
+                            
+                            \${speaker.linkedin_url ? \`
+                                <div class="mb-4">
+                                    <h4 class="text-sm font-semibold text-gray-700 mb-2">
+                                        <i class="fab fa-linkedin mr-2"></i>LinkedIn Profile
+                                    </h4>
+                                    <a href="\${speaker.linkedin_url}" target="_blank" rel="noopener noreferrer" 
+                                       class="text-blue-600 hover:text-blue-800 transition-colors font-medium">
+                                        <i class="fab fa-linkedin mr-1"></i>
+                                        View LinkedIn Profile
+                                        <i class="fas fa-external-link-alt ml-1 text-xs"></i>
+                                    </a>
                                 </div>
                             \` : ''}
                             
