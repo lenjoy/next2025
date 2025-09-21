@@ -6,8 +6,8 @@
 - **Features**: Interactive speakers directory, detailed speaker profiles, search and filtering capabilities, responsive design
 
 ## Live URLs
-- **Production**: https://d899c202.nex-t-2025.pages.dev
-- **Production API**: https://d899c202.nex-t-2025.pages.dev/api/speakers
+- **Production**: https://e5486444.nex-t-2025.pages.dev
+- **Production API**: https://e5486444.nex-t-2025.pages.dev/api/speakers
 - **Development**: https://3000-i7iw780a7spdww18yxc86-6532622b.e2b.dev
 - **GitHub**: https://github.com/lenjoy/next2025
 
@@ -95,12 +95,21 @@
 
 ### **Production Database Status**
 - **Total Speakers**: 38 speakers confirmed in Cloudflare D1
-- **LinkedIn Profiles**: 34+ verified LinkedIn profiles with comprehensive summaries
+- **LinkedIn Profiles**: 34+ verified and working LinkedIn profiles with comprehensive summaries
 - **Professional Summaries**: Detailed career backgrounds for networking and business development
 - **Public Sessions**: 35 speakers with full professional information
 - **Closed Door Sessions**: 3 speakers
 - **Database Size**: 0.10 MB (includes LinkedIn URLs and professional summaries)
-- **Last Updated**: September 21, 2025
+- **Last Updated**: September 21, 2025 - LinkedIn URLs verified and corrected
+
+### **Recent LinkedIn Fixes Applied** ✅
+**Fixed broken LinkedIn URLs for key speakers:**
+- **Alice Ahmed** (Ex-VP Product at AppLovin) - Updated to correct profile: `aliceliuahmed`
+- **Babar Ahmed** (CEO, Mindstorm Studios) - Updated to correct profile: `babarahmed`
+- **Dr. Emmett Cunningham** (Former Senior Managing Director, Blackstone) - Updated to verified profile: `emmett-cunningham-6b6a9950`
+- **Holly Zheng** (Founding Partner, EnvisionX Capital) - Updated to correct profile: `hollyzheng`
+
+All LinkedIn links are now verified and working correctly for seamless professional networking.
 
 ### **Closed Door Sessions** (3 speakers)
 - Chen Tianqiao (Founder, Shanda Group)
@@ -151,11 +160,11 @@
 ## Deployment Status
 
 ### **Current Status**: ✅ Production Deployed + Development Environment
-- **Production**: Live on Cloudflare Pages at https://23c7cb42.nex-t-2025.pages.dev
-- **Development**: Running locally on PM2 with hot reload
-- **Database**: Cloudflare D1 production database with migrations applied
+- **Production**: Live on Cloudflare Pages at https://e5486444.nex-t-2025.pages.dev
+- **Development**: Running locally on PM2 with hot reload  
+- **Database**: Cloudflare D1 production database with LinkedIn fixes applied
 - **Project**: nex-t-2025 on Cloudflare Pages
-- **Last Updated**: September 21, 2025
+- **Last Updated**: September 21, 2025 - LinkedIn URLs verified and corrected
 
 ### **Deployment Complete**:
 - ✅ Code deployed to Cloudflare Pages
@@ -209,4 +218,4 @@ This website serves as the comprehensive professional intelligence platform for 
 - **🏛️ Government Officials** - State treasurers, Policy makers, Public service leaders
 - **🚀 Technology Entrepreneurs** - Serial founders, AI company CEOs, Innovation leaders
 
-Visit the enhanced website at **https://d899c202.nex-t-2025.pages.dev** to explore comprehensive professional backgrounds and strategic networking opportunities!
+Visit the enhanced website at **https://e5486444.nex-t-2025.pages.dev** to explore comprehensive professional backgrounds and strategic networking opportunities!
