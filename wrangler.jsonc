@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "webapp",
+  "name": "nex-t-2025",
   "compatibility_date": "2025-09-21",
   "pages_build_output_dir": "./dist",
   "compatibility_flags": [
@@ -9,8 +9,8 @@
   "d1_databases": [
     {
       "binding": "DB",
-      "database_name": "nex-t-speakers",
-      "database_id": "placeholder-will-be-replaced-after-creation"
+      "database_name": "nex-t-speakers-production",
+      "database_id": "72a41b5a-75bd-41b8-b7d0-18f56df0eadc"
     }
   ],
   // "ai": {
