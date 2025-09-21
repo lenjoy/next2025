@@ -8,7 +8,7 @@
 ## Live URLs
 - **Development**: https://3000-i7iw780a7spdww18yxc86-6532622b.e2b.dev
 - **API Health Check**: https://3000-i7iw780a7spdww18yxc86-6532622b.e2b.dev/api/speakers
-- **GitHub**: (To be configured during deployment)
+- **GitHub**: https://github.com/lenjoy/next2025
 
 ## Currently Completed Features
 
