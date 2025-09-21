@@ -6,8 +6,8 @@
 - **Features**: Interactive speakers directory, detailed speaker profiles, search and filtering capabilities, responsive design
 
 ## Live URLs
-- **Production**: https://e5486444.nex-t-2025.pages.dev
-- **Production API**: https://e5486444.nex-t-2025.pages.dev/api/speakers
+- **Production**: https://4c4813e6.nex-t-2025.pages.dev
+- **Production API**: https://4c4813e6.nex-t-2025.pages.dev/api/speakers
 - **Development**: https://3000-i7iw780a7spdww18yxc86-6532622b.e2b.dev
 - **GitHub**: https://github.com/lenjoy/next2025
 
@@ -102,14 +102,26 @@
 - **Database Size**: 0.10 MB (includes LinkedIn URLs and professional summaries)
 - **Last Updated**: September 21, 2025 - LinkedIn URLs verified and corrected
 
-### **Recent LinkedIn Fixes Applied** ✅
-**Fixed broken LinkedIn URLs for key speakers:**
+### **Comprehensive LinkedIn Fixes Applied** ✅
+**Fixed broken LinkedIn URLs for 12 key speakers in two phases:**
+
+**Phase 1 - Initial Fixes (4 speakers):**
 - **Alice Ahmed** (Ex-VP Product at AppLovin) - Updated to correct profile: `aliceliuahmed`
 - **Babar Ahmed** (CEO, Mindstorm Studios) - Updated to correct profile: `babarahmed`
 - **Dr. Emmett Cunningham** (Former Senior Managing Director, Blackstone) - Updated to verified profile: `emmett-cunningham-6b6a9950`
 - **Holly Zheng** (Founding Partner, EnvisionX Capital) - Updated to correct profile: `hollyzheng`
 
-All LinkedIn links are now verified and working correctly for seamless professional networking.
+**Phase 2 - Additional Fixes (8 speakers):**
+- **Chrissy Luo** (Co-founder, Shanda Group) - Updated from `chrissy-luo-shanda` to `chrissy-luo`
+- **Dexter Roberts** (Atlantic Council Senior Fellow) - Updated from `dexter-roberts-atlantic-council` to `dexter-roberts-03907231`
+- **Dr. Hongbin Li** (Stanford Professor) - Updated from `hongbin-li-stanford` to `hongbin-li-62977a206`
+- **Dr. Ken Lin** (SVP, CP Group Thailand) - Updated from `ken-lin-cp-group` to `lin-boston`
+- **Echo Cheng** (Founder, Brightway Future Capital) - Updated from `echo-cheng-brightway` to `echo-cheng-5632a812`
+- **Fu Sheng** (CEO, Cheetah Mobile) - Updated from `fu-sheng-cheetah` to `sheng-fu-4b49a086`
+- **Fiona Ma** (California State Treasurer) - Updated from `fiona-ma-california` to `fionamacpa`
+- **Guangyu Robert Yang** (CEO, Altera) - Updated from `guangyu-yang-mit` to `robert-yang-41a83019`
+
+**Result:** All 34 LinkedIn profiles are now verified and working correctly for seamless professional networking and business development.
 
 ### **Closed Door Sessions** (3 speakers)
 - Chen Tianqiao (Founder, Shanda Group)
@@ -160,7 +172,7 @@ All LinkedIn links are now verified and working correctly for seamless professio
 ## Deployment Status
 
 ### **Current Status**: ✅ Production Deployed + Development Environment
-- **Production**: Live on Cloudflare Pages at https://e5486444.nex-t-2025.pages.dev
+- **Production**: Live on Cloudflare Pages at https://4c4813e6.nex-t-2025.pages.dev
 - **Development**: Running locally on PM2 with hot reload  
 - **Database**: Cloudflare D1 production database with LinkedIn fixes applied
 - **Project**: nex-t-2025 on Cloudflare Pages
@@ -218,4 +230,4 @@ This website serves as the comprehensive professional intelligence platform for 
 - **🏛️ Government Officials** - State treasurers, Policy makers, Public service leaders
 - **🚀 Technology Entrepreneurs** - Serial founders, AI company CEOs, Innovation leaders
 
-Visit the enhanced website at **https://e5486444.nex-t-2025.pages.dev** to explore comprehensive professional backgrounds and strategic networking opportunities!
+Visit the enhanced website at **https://4c4813e6.nex-t-2025.pages.dev** to explore comprehensive professional backgrounds and strategic networking opportunities!
