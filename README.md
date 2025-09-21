@@ -6,8 +6,9 @@
 - **Features**: Interactive speakers directory, detailed speaker profiles, search and filtering capabilities, responsive design
 
 ## Live URLs
+- **Production**: https://23c7cb42.nex-t-2025.pages.dev
+- **Production API**: https://23c7cb42.nex-t-2025.pages.dev/api/speakers
 - **Development**: https://3000-i7iw780a7spdww18yxc86-6532622b.e2b.dev
-- **API Health Check**: https://3000-i7iw780a7spdww18yxc86-6532622b.e2b.dev/api/speakers
 - **GitHub**: https://github.com/lenjoy/next2025
 
 ## Currently Completed Features
@@ -128,17 +129,19 @@
 
 ## Deployment Status
 
-### **Current Status**: ✅ Active Development Environment
-- **Platform**: Cloudflare Pages (Ready for production deployment)
-- **Local Development**: Running on PM2 with hot reload
-- **Database**: D1 local SQLite with migration system
+### **Current Status**: ✅ Production Deployed + Development Environment
+- **Production**: Live on Cloudflare Pages at https://23c7cb42.nex-t-2025.pages.dev
+- **Development**: Running locally on PM2 with hot reload
+- **Database**: Cloudflare D1 production database with migrations applied
+- **Project**: nex-t-2025 on Cloudflare Pages
 - **Last Updated**: September 21, 2025
 
-### **Production Deployment Ready**:
-- All code is production-ready
-- Database schema and migrations prepared
-- Environment configuration completed
-- Requires only Cloudflare API key setup for deployment
+### **Deployment Complete**:
+- ✅ Code deployed to Cloudflare Pages
+- ✅ Production D1 database created and configured  
+- ✅ Database migrations applied to production
+- ✅ Cloudflare Workers runtime configured
+- ⚠️  Database seeding needs to be done via the production interface
 
 ## Development Commands
 
