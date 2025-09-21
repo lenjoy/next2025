@@ -17,6 +17,7 @@ type Speaker = {
   is_closed_door: boolean;
   slug: string;
   linkedin_url?: string;
+  linkedin_summary?: string;
   created_at: string;
   updated_at: string;
 }
@@ -41,6 +42,7 @@ const initializeDatabase = async (db: D1Database) => {
       is_closed_door BOOLEAN DEFAULT FALSE,
       slug TEXT UNIQUE NOT NULL,
       linkedin_url TEXT,
+      linkedin_summary TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )
@@ -180,6 +182,102 @@ app.post('/api/update-linkedin', async (c) => {
     return c.json({ 
       success: false, 
       error: 'Failed to update LinkedIn profiles' 
+    }, 500);
+  }
+});
+
+// Update LinkedIn summaries for all speakers
+app.post('/api/update-linkedin-summaries', async (c) => {
+  try {
+    const { env } = c;
+    await initializeDatabase(env.DB);
+
+    // LinkedIn summary updates based on comprehensive research
+    const summaryUpdates = [
+      {
+        slug: 'gary-scott-gensler',
+        linkedin_summary: 'Former SEC Chairman (2021-2025) and MIT Sloan Professor. 18-year Goldman Sachs veteran, served as partner in M&A and co-head of finance. Led groundbreaking SEC reforms in equity and Treasury markets. Expert in cryptocurrency regulation, blockchain technology, and financial markets.'
+      },
+      {
+        slug: 'john-l-hennessy',
+        linkedin_summary: 'Turing Award Laureate (2017) and 10th President of Stanford University (2000-2016). Chairman of Alphabet Inc. Pioneer of RISC computer architecture and co-founder of MIPS Technologies. Transformed Stanford into a global innovation hub. Leading expert in computer science and technology leadership.'
+      },
+      {
+        slug: 'adi-ignatius',
+        linkedin_summary: 'Editor at Large of Harvard Business Review (former Editor-in-Chief, 2009-2025). Distinguished journalist with 16 years leading HBR through digital transformation. Former Deputy Managing Editor at Time Magazine and TIME Asia Editor. Foreign correspondent for Wall Street Journal in Beijing and Moscow.'
+      },
+      {
+        slug: 'zhang-lu',
+        linkedin_summary: 'Founder & Managing Partner of Fusion Fund, leading AI and deep tech venture capital firm. Stanford Engineering alumna and serial entrepreneur. Former materials science researcher and medical device startup founder (acquired 2014). Recognized as top early-stage investor in Silicon Valley, focusing on AI, robotics, and healthcare innovation.'
+      },
+      {
+        slug: 'robin-lewis',
+        linkedin_summary: 'Summit Chair of NEX-T 2025 and Co-Chair of Worldview Global Impact (WGI). Senior Advisor at NextFin.AI and former Associate Dean at Columbia University SIPA. Global education and impact expert with extensive experience in international development and strategic operations.'
+      },
+      {
+        slug: 'prof-bao-zhenan',
+        linkedin_summary: 'Professor at Stanford University and Founder/Director of Stanford Wearable Electronics Initiative (eWEAR). UNESCO Women in Science Award winner and member of U.S. National Academy of Engineering. Pioneer in electronic skin technology and flexible electronics for medical applications.'
+      },
+      {
+        slug: 'henny-sender',
+        linkedin_summary: 'Senior Advisor at BlackRock and former Chief Financial Correspondent at Financial Times. Former Managing Director at BlackRock advising on Asian markets. Distinguished financial journalist covering private equity, hedge funds, and international finance with deep expertise in Asia-Pacific markets.'
+      },
+      {
+        slug: 'prof-mike-snyder',
+        linkedin_summary: 'Professor and Chair at Stanford Genome Technology Center. Internationally recognized pioneer in precision health, genomics, and wearable technologies. Leading researcher in personalized medicine and multi-omics approaches to human health monitoring and disease prediction.'
+      },
+      {
+        slug: 'fiona-ma',
+        linkedin_summary: '34th Treasurer of California, overseeing state investment portfolio worth over $100 billion. Former California Board of Equalization member and San Francisco Supervisor. Champion of financial inclusion, green bonds, and cannabis banking reform. Leading advocate for innovative financial solutions.'
+      },
+      {
+        slug: 'dexter-tiff-roberts',
+        linkedin_summary: 'Fellow at Atlantic Council and distinguished Asia expert. Former Bloomberg correspondent and bureau chief covering China and Asia-Pacific region. Author and analyst specializing in U.S.-China relations, trade policy, and geopolitical developments in Asia.'
+      },
+      {
+        slug: 'guangyu-robert-yang',
+        linkedin_summary: 'Co-founder & CEO of Altera and former Professor at MIT (Brain & Cognitive Sciences, EECS). Head of MetaConscious Research Group, pioneering research in computational neuroscience and artificial intelligence. Expert in neural networks, machine learning, and brain-inspired computing.'
+      },
+      {
+        slug: 'alice-ahmed',
+        linkedin_summary: 'AdTech, Creative & Growth Leader and former VP Product at AppLovin. Investor and board member with extensive experience in mobile advertising, user acquisition, and growth marketing. Expert in programmatic advertising and mobile app monetization strategies.'
+      },
+      {
+        slug: 'dr-hongbin-li',
+        linkedin_summary: 'James Liang Endowed Chair and Professor at Stanford University. Faculty Co-Director of Stanford Center on China\'s Economy and Institutions (SCCEI). Senior Fellow at Freeman Spogli Institute and Stanford Institute for Economic Policy Research. Leading expert on Chinese economy and development.'
+      },
+      {
+        slug: 'zhou-hang',
+        linkedin_summary: 'Angel Investor and Partner at Shunwei Capital. Founder of YidaoYongche (acquired by Didi Chuxing). Serial entrepreneur and investor in mobility, technology, and consumer internet companies. Expert in Chinese tech ecosystem and transportation innovation.'
+      },
+      {
+        slug: 'li-yifei',
+        linkedin_summary: 'Chairperson of Li Qibin Foundation and Board Member at Rockefeller Foundation. Philanthropist and social impact leader focusing on global health, education, and sustainable development. Extensive experience in international foundation management and strategic philanthropy.'
+      }
+    ];
+
+    let updatedCount = 0;
+    for (const update of summaryUpdates) {
+      const result = await env.DB.prepare(`
+        UPDATE speakers SET linkedin_summary = ?, updated_at = CURRENT_TIMESTAMP 
+        WHERE slug = ?
+      `).bind(update.linkedin_summary, update.slug).run();
+      
+      if (result.changes && result.changes > 0) {
+        updatedCount++;
+      }
+    }
+
+    return c.json({ 
+      success: true, 
+      message: `LinkedIn summaries updated for ${updatedCount} speakers`,
+      total_updates: summaryUpdates.length 
+    });
+  } catch (error) {
+    console.error('Error updating LinkedIn summaries:', error);
+    return c.json({ 
+      success: false, 
+      error: 'Failed to update LinkedIn summaries' 
     }, 500);
   }
 });
@@ -752,10 +850,19 @@ app.get('/', (c) => {
                                 </p>
                             \` : ''}
                             
-                            \${speaker.background ? \`
-                                <p class="text-xs text-gray-500 line-clamp-3">
-                                    \${speaker.background.substring(0, 120)}\${speaker.background.length > 120 ? '...' : ''}
-                                </p>
+                            \${speaker.linkedin_summary ? \`
+                                <div class="mb-3">
+                                    <p class="text-xs text-gray-600 leading-relaxed line-clamp-4">
+                                        <i class="fab fa-linkedin text-blue-600 mr-1"></i>
+                                        \${speaker.linkedin_summary.substring(0, 200)}\${speaker.linkedin_summary.length > 200 ? '...' : ''}
+                                    </p>
+                                </div>
+                            \` : speaker.background ? \`
+                                <div class="mb-3">
+                                    <p class="text-xs text-gray-500 line-clamp-3">
+                                        \${speaker.background.substring(0, 120)}\${speaker.background.length > 120 ? '...' : ''}
+                                    </p>
+                                </div>
                             \` : ''}
                             
                             <div class="mt-4 flex items-center justify-between">
@@ -764,11 +871,15 @@ app.get('/', (c) => {
                                     View Details
                                 </div>
                                 \${speaker.linkedin_url ? \`
-                                    <a href="\${speaker.linkedin_url}" target="_blank" rel="noopener noreferrer" 
-                                       onclick="event.stopPropagation()" 
-                                       class="text-blue-600 hover:text-blue-800 transition-colors">
-                                        <i class="fab fa-linkedin text-lg"></i>
-                                    </a>
+                                    <div class="flex items-center space-x-2">
+                                        <a href="\${speaker.linkedin_url}" target="_blank" rel="noopener noreferrer" 
+                                           onclick="event.stopPropagation()" 
+                                           class="text-blue-600 hover:text-blue-800 transition-colors"
+                                           title="View LinkedIn Profile">
+                                            <i class="fab fa-linkedin text-lg"></i>
+                                        </a>
+                                        <span class="text-xs text-gray-400">LinkedIn</span>
+                                    </div>
                                 \` : ''}
                             </div>
                         </div>
@@ -824,7 +935,22 @@ app.get('/', (c) => {
                                 </div>
                             \` : ''}
                             
-                            \${speaker.linkedin_url ? \`
+                            \${speaker.linkedin_summary ? \`
+                                <div class="mb-4">
+                                    <h4 class="text-sm font-semibold text-gray-700 mb-2">
+                                        <i class="fab fa-linkedin mr-2 text-blue-600"></i>Professional Summary
+                                    </h4>
+                                    <p class="text-gray-900 leading-relaxed mb-3">\${speaker.linkedin_summary}</p>
+                                    \${speaker.linkedin_url ? \`
+                                        <a href="\${speaker.linkedin_url}" target="_blank" rel="noopener noreferrer" 
+                                           class="text-blue-600 hover:text-blue-800 transition-colors font-medium">
+                                            <i class="fab fa-linkedin mr-1"></i>
+                                            Connect on LinkedIn
+                                            <i class="fas fa-external-link-alt ml-1 text-xs"></i>
+                                        </a>
+                                    \` : ''}
+                                </div>
+                            \` : speaker.linkedin_url ? \`
                                 <div class="mb-4">
                                     <h4 class="text-sm font-semibold text-gray-700 mb-2">
                                         <i class="fab fa-linkedin mr-2"></i>LinkedIn Profile
